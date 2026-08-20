@@ -15,6 +15,42 @@ object casa {
     }
 }
 
+object cuentaCombinada {
+  
+  var cuentaPrimaria = cuentaCorriente
+  var cuentaSecundaria = cuentaConGastosDeMantenimiento
+
+  method cuentaPrimaria(_cuentaPrimaria) {
+    cuentaPrimaria = _cuentaPrimaria
+  }
+
+  method cuentaSecundaria(_cuentaSecundaria) {
+    cuentaSecundaria = _cuentaSecundaria
+  }
+  method saldo() {
+   return 0.max(cuentaPrimaria.saldo()) + 0.max(cuentaSecundaria.saldo())
+  }
+
+  method depositar(monto) {
+    cuentaPrimaria.depositar(monto)
+  }
+
+  method validarExtraer(monto) {
+    if (monto > self.saldo()){
+        self.error("No es posible extraer el dinero")
+    }
+  }  
+  method extraer(monto) {
+    self.validarExtraer(monto)
+    if(monto < cuentaPrimaria.saldo() ){
+        cuentaPrimaria.extraer(monto)
+
+    } (){
+
+    }
+  }
+}
+
 object cuentaCorriente{
     var saldo = 10000
 
