@@ -3,7 +3,35 @@ import casa.*
 describe "casa de pepe y julian" {
 
   // Descomentar si hiciera falta un metodo para inicializar el ambiente
-  // method initialize() {
-  // }
+  method initialize() {
+   cuentaCorriente.saldo(300)
+   cuentaConGastosDeMantenimiento.saldo(0)
+   cuentaConGastosDeMantenimiento.costoPorOperacion(20)
+   }
 
+    test "Estado de saldo en cuenta corriente"{
+
+    casa.gastar(200)
+    assert.equals(100, cuentaCorriente.saldo())
+    casa.gastar(400)
+    assert.equals(600 , casa.totalGastadoEnElMes())
+    casa.cambiarMes()
+    assert.equals(0, casa.totalGastadoEnElMes())
+    }
+    
+    test "Estado de saldo en cuenta con gastos de mantenimiento"{
+      cuentaConGastosDeMantenimiento.depositar(1000)
+      assert.equals(980, cuentaConGastosDeMantenimiento.saldo())
+      cuentaConGastosDeMantenimiento.extraer(580)
+      assert.equals(400, cuentaConGastosDeMantenimiento.saldo())
+      cuentaConGastosDeMantenimiento.extraer(500)
+      assert.equals(-100, cuentaConGastosDeMantenimiento.saldo())
+      cuentaConGastosDeMantenimiento.depositar(150)
+      assert.equals(30, cuentaConGastosDeMantenimiento.saldo())
+    }
+
+    test  "Caso excepcional" {
+      cuentaConGastosDeMantenimiento.saldo(0)
+      cuentaConGastosDeMantenimiento.depositar(10)
+    }
 }
