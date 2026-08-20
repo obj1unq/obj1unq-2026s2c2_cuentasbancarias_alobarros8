@@ -35,3 +35,18 @@ describe "casa de pepe y julian" {
      assert.throwsException({ cuentaConGastosDeMantenimiento.depositar(10) }) 
     }
 }
+
+describe "Parte 2 cuentas combinadas" {
+  method initialize() {
+    casa.cuenta(cuentaCombinada)
+    cuentaCombinada.cuentaPrimaria(cuentaConGastosDeMantenimiento)
+    cuentaCombinada.cuentaSecundaria(cuentaCorriente)
+    cuentaConGastosDeMantenimiento.saldo(0)
+    cuentaConGastosDeMantenimiento.costoPorOperacion(20)
+    cuentaCorriente.saldo(300)
+  }
+  test "gastos cuenta combinada" {
+    cuentaCombinada.depositar(100)
+    
+  }
+}
