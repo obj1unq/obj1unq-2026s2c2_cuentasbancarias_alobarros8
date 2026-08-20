@@ -10,7 +10,7 @@ describe "casa de pepe y julian" {
    }
 
     test "Estado de saldo en cuenta corriente"{
-
+    
     casa.gastar(200)
     assert.equals(100, cuentaCorriente.saldo())
     casa.gastar(400)
@@ -32,6 +32,6 @@ describe "casa de pepe y julian" {
 
     test  "Caso excepcional" {
       cuentaConGastosDeMantenimiento.saldo(0)
-      cuentaConGastosDeMantenimiento.depositar(10)
+     assert.throwsException({ cuentaConGastosDeMantenimiento.depositar(10) }) 
     }
 }
