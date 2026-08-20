@@ -30,7 +30,7 @@ describe "casa de pepe y julian" {
       assert.equals(30, cuentaConGastosDeMantenimiento.saldo())
     }
 
-    test  "Caso excepcional" {
+    test  "NO se puede depositar plata en la cuenta de mantenimiento cuando el costo de deposito es mayor al monto a depositar" {
       cuentaConGastosDeMantenimiento.saldo(0)
      assert.throwsException({ cuentaConGastosDeMantenimiento.depositar(10) }) 
     }
@@ -47,6 +47,7 @@ describe "Parte 2 cuentas combinadas" {
   }
   test "gastos cuenta combinada" {
     cuentaCombinada.depositar(100)
-    
+    assert.equals(380, cuentaCombinada.saldo())
+    assert.equals(80, cuentaConGastosDeMantenimiento.saldo())
   }
 }
