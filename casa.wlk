@@ -45,8 +45,10 @@ object cuentaCombinada {
     if(monto < cuentaPrimaria.saldo() ){
         cuentaPrimaria.extraer(monto)
 
-    } (){
-
+    } else {
+        cuentaSecundaria.extraer(monto - cuentaPrimaria.saldo())
+        cuentaPrimaria.extraer(cuentaPrimaria.saldo())
+        
     }
   }
 }
