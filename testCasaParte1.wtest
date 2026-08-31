@@ -49,5 +49,12 @@ describe "Parte 2 cuentas combinadas" {
     cuentaCombinada.depositar(100)
     assert.equals(380, cuentaCombinada.saldo())
     assert.equals(80, cuentaConGastosDeMantenimiento.saldo())
+    casa.gastar(280)
+    assert.equals(280, casa.totalGastadoEnElMes())
+    assert.equals(100, cuentaCombinada.saldo())
+    assert.equals(0, cuentaConGastosDeMantenimiento.saldo())
+    assert.equals(100, cuentaCorriente.saldo())
   }
+
+
 }
