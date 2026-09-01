@@ -7,7 +7,7 @@ object casa {
     method cuenta() = cuenta
     method totalGastadoEnElMes() = totalGastadoEnElMes
     method gastar(monto){
-        cuenta.saldo(cuenta.saldo() - monto )
+        cuenta.extraer(monto)
         totalGastadoEnElMes += monto
     }
     method cambiarMes() {
