@@ -9,9 +9,8 @@ object casa {
       estrategiaDeMantenimiento = _estrategiaDeMantenimiento
     }
     method verificarSiSePuedeReparar() {
-      if(self.reparaciones() > cuenta.saldo()){
-        self.error("No se puede reparar no hay plata")
-      }
+      self.reparaciones() > cuenta.saldo()
+  
     }
     method reparar() {
       
