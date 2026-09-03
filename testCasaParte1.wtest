@@ -3,7 +3,96 @@ import casa.*
 describe "casa de pepe y julian" {
 
   // Descomentar si hiciera falta un metodo para inicializar el ambiente
-  // method initialize() {
-  // }
+  method initialize() {
+   cuentaCorriente.saldo(300)
+   cuentaConGastosDeMantenimiento.saldo(0)
+   cuentaConGastosDeMantenimiento.costoPorOperacion(20)
+   }
 
+    test "Estado de saldo en cuenta corriente"{
+    
+    casa.gastar(200)
+    assert.equals(100, cuentaCorriente.saldo())
+    casa.gastar(400)
+    assert.equals(600 , casa.totalGastadoEnElMes())
+    casa.cambiarMes()
+    assert.equals(0, casa.totalGastadoEnElMes())
+    }
+    
+    test "Estado de saldo en cuenta con gastos de mantenimiento"{
+      cuentaConGastosDeMantenimiento.depositar(1000)
+      assert.equals(980, cuentaConGastosDeMantenimiento.saldo())
+      cuentaConGastosDeMantenimiento.extraer(580)
+      assert.equals(400, cuentaConGastosDeMantenimiento.saldo())
+      cuentaConGastosDeMantenimiento.extraer(500)
+      assert.equals(-100, cuentaConGastosDeMantenimiento.saldo())
+      cuentaConGastosDeMantenimiento.depositar(150)
+      assert.equals(30, cuentaConGastosDeMantenimiento.saldo())
+    }
+
+    test  "NO se puede depositar plata en la cuenta de mantenimiento cuando el costo de deposito es mayor al monto a depositar" {
+      cuentaConGastosDeMantenimiento.saldo(0)
+     assert.throwsException({ cuentaConGastosDeMantenimiento.depositar(10) }) 
+    }
+}
+
+describe "Parte 2 cuentas combinadas" {
+  method initialize() {
+    casa.cuenta(cuentaCombinada)
+    cuentaCombinada.cuentaPrimaria(cuentaConGastosDeMantenimiento)
+    cuentaCombinada.cuentaSecundaria(cuentaCorriente)
+    cuentaConGastosDeMantenimiento.saldo(0)
+    cuentaConGastosDeMantenimiento.costoPorOperacion(20)
+    cuentaCorriente.saldo(300)
+  }
+  test "gastos cuenta combinada" {
+    cuentaCombinada.depositar(100)
+    assert.equals(380, cuentaCombinada.saldo())
+    assert.equals(80, cuentaConGastosDeMantenimiento.saldo())
+    casa.gastar(280)
+    assert.equals(280, casa.totalGastadoEnElMes())
+    assert.equals(100, cuentaCombinada.saldo())
+    assert.equals(0, cuentaConGastosDeMantenimiento.saldo())
+    assert.equals(100, cuentaCorriente.saldo())
+  }
+
+
+}
+
+describe "test parte 3" {
+
+  method initialize(){
+    casa.viveres(30)
+    casa.reparaciones(0)
+    casa.cuenta(cuentaCorriente)
+    cuentaCorriente.saldo(2000)
+  }
+  test "romper y viveres" {
+    casa.romperAlgoDeValor_(1000)
+    assert.equals(false, casa.hayViveresSuficientes())
+    assert.equals(true, casa.hayQueHacerReparaciones())
+    assert.equals(false, casa.estaEnOrden())
+
+   assert.throwsException({ casa.comprarViveres_DeCalidad_(80, 2) }) 
+   assert.equals(30, casa.viveres())
+   assert.equals(2000, cuentaCorriente.saldo())
+   assert.equals(0, casa.totalGastadoEnElMes())
+   casa.comprarViveres_DeCalidad_(20, 2)
+   assert.equals(true, casa.hayViveresSuficientes()) 
+   assert.equals(50, casa.viveres())
+   assert.equals(false, casa.estaEnOrden())
+   assert.equals(1960, cuentaCorriente.saldo())
+   assert.equals(40, casa.totalGastadoEnElMes())
+
+   casa.reparar()
+   assert.equals(false, casa.hayQueHacerReparaciones())
+   assert.equals(true, casa.estaEnOrden())
+   assert.equals(960, cuentaCorriente.saldo())
+   assert.equals(1040, casa.totalGastadoEnElMes())
+
+
+  }
+
+
+  
 }
