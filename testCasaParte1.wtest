@@ -58,3 +58,38 @@ describe "Parte 2 cuentas combinadas" {
 
 
 }
+
+describe "test parte 3" {
+
+  method initialize(){
+    casa.viveres(30)
+    casa.reparaciones(0)
+    casa.cuenta(cuentaCorriente)
+    cuentaCorriente.saldo(2000)
+  }
+  test "romper y viveres" {
+    casa.romperAlgoDeValor_(1000)
+    assert.equals(false, casa.hayViveresSuficientes())
+    assert.equals(true, casa.hayQueHacerReparaciones())
+    assert.equals(false, casa.estaEnOrden())
+
+   assert.throwsException({ casa.comprarViveres_DeCalidad_(80, 2) }) 
+   assert.equals(30, casa.viveres())
+   assert.equals(2000, cuentaCorriente.saldo())
+   assert.equals(0, casa.totalGastadoEnElMes())
+   casa.comprarViveres_DeCalidad_(20, 2)
+   assert.equals(true, casa.hayViveresSuficientes()) 
+   assert.equals(50, casa.viveres())
+   assert.equals(false, casa.estaEnOrden())
+   assert.equals(1960, cuentaCorriente.saldo())
+   assert.equals(40, casa.totalGastadoEnElMes())
+
+   casa.reparar()
+   assert.equals(false, casa.hayViveresSuficientes())
+   assert.equals(true, casa.estaEnOrden())
+   assert.equals(960, cuentaCorriente.saldo())
+   assert.equals(1040, casa.totalGastadoEnElMes())
+
+
+  }
+}
