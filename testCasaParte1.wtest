@@ -85,7 +85,7 @@ describe "test parte 3" {
    assert.equals(40, casa.totalGastadoEnElMes())
 
    casa.reparar()
-   assert.equals(false, casa.hayViveresSuficientes())
+   assert.equals(false, casa.hayQueHacerReparaciones())
    assert.equals(true, casa.estaEnOrden())
    assert.equals(960, cuentaCorriente.saldo())
    assert.equals(1040, casa.totalGastadoEnElMes())

@@ -15,7 +15,7 @@ object casa {
 
     method comprarViveres_DeCalidad_(_viveres , calidad) {
       self.validarCompraDeViveres(_viveres )
-      viveres += _viveres 
+      viveres = viveres + _viveres 
       self.gastar(_viveres * calidad)
     }
 
