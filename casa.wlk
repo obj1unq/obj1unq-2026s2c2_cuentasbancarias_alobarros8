@@ -4,7 +4,17 @@ object casa {
     var totalGastadoEnElMes = 0
     var reparaciones = 0
     var estrategiaDeMantenimiento = minimoIndispensable
+   
+    method estrategiaDeMantenimiento(_estrategiaDeMantenimiento) {
+      estrategiaDeMantenimiento = _estrategiaDeMantenimiento
+    }
+    method verificarSiSePuedeReparar() {
+      if(self.reparaciones() > cuenta.saldo()){
+        self.error("No se puede reparar no hay plata")
+      }
+    }
     method reparar() {
+      
       self.gastar(reparaciones)
       self.reparaciones(0)
     }
@@ -80,13 +90,27 @@ object full {
   const calidadViveres = 5
 
   method calidadViveres() = calidadViveres
-   method ejecutarTareas(_casa) {
+  method ejecutarTareas(_casa) {
     if(_casa.estaEnOrden()){
       _casa.comprarViveres_DeCalidad_(100 - calidadViveres, self.calidadViveres())
+    }else{
+      self.comprarSiHayMenosDe40DeViveres(_casa)
+      self.repararSiLoRequiere(_casa)
     }
 
 
     }
+  method comprarSiHayMenosDe40DeViveres(_casa) {
+    if (_casa.viveres() < 40){
+      _casa.comprarViveres_DeCalidad_(40 -_casa.viveres(), self.calidadViveres())
+    }
+  }
+  method repararSiLoRequiere(_casa) {
+    if (_casa.hayQueHacerReparaciones() and _casa.verificarSiSePuedeReparar()){
+      _casa.reparar()
+
+    }
+  }
 
    
      
