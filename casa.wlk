@@ -3,7 +3,7 @@ object casa {
     var cuenta = cuentaCorriente
     var totalGastadoEnElMes = 0
     var reparaciones = 0
-
+    var estrategiaDeMantenimiento = minimoIndispensable
     method reparar() {
       self.gastar(reparaciones)
       self.reparaciones(0)
@@ -35,10 +35,12 @@ object casa {
     }
 
     method reparaciones() = reparaciones
+    
     method reparaciones(_reparaciones) {
       reparaciones = _reparaciones
     }
     method viveres() = viveres
+    
     method viveres(_viveres) { //uso para el test unicamente 
       viveres = _viveres   
        }
@@ -47,15 +49,50 @@ object casa {
         cuenta = _cuenta
     }
     method cuenta() = cuenta
+    
     method totalGastadoEnElMes() = totalGastadoEnElMes
+    
     method gastar(monto){
         cuenta.extraer(monto)
         totalGastadoEnElMes += monto
     }
+    
     method cambiarMes() {
       totalGastadoEnElMes = 0
+      estrategiaDeMantenimiento.ejecutarTareas(self)
     }
 }
+
+object minimoIndispensable {
+  var calidadViveres = 1
+  method calidadViveres(_caldiadViveres) {
+    calidadViveres = _caldiadViveres
+  }
+  method calidadViveres() = calidadViveres
+  method ejecutarTareas(_casa) {
+    if( not _casa.hayViveresSuficientes()){
+        _casa.comprarViveres_DeCalidad_(40 -_casa.viveres(), self.calidadViveres())
+    }
+  }
+}
+
+object full {
+  const calidadViveres = 5
+
+  method calidadViveres() = calidadViveres
+   method ejecutarTareas(_casa) {
+    if(_casa.estaEnOrden()){
+      _casa.comprarViveres_DeCalidad_(100 - calidadViveres, self.calidadViveres())
+    }
+
+
+    }
+
+   
+     
+    
+}
+
 
 object cuentaCombinada {
   
