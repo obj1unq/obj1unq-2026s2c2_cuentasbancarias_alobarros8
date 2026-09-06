@@ -9,7 +9,7 @@ object casa {
       estrategiaDeMantenimiento = _estrategiaDeMantenimiento
     }
     method verificarSiSePuedeReparar() {
-      self.reparaciones() > cuenta.saldo()
+      return self.reparaciones() > cuenta.saldo()
   
     }
     method reparar() {
@@ -91,7 +91,7 @@ object full {
   method calidadViveres() = calidadViveres
   method ejecutarTareas(_casa) {
     if(_casa.estaEnOrden()){
-      _casa.comprarViveres_DeCalidad_(100 - calidadViveres, self.calidadViveres())
+      _casa.comprarViveres_DeCalidad_(100 - _casa.Viveres(), self.calidadViveres())
     }else{
       self.comprarSiHayMenosDe40DeViveres(_casa)
       self.repararSiLoRequiere(_casa)
